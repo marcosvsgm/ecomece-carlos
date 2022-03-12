@@ -15,7 +15,13 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('category_id');
+            $table->string('unid')->unique();
+            $table->string('name')->unique();
+            $table->string('slug')->unique();
+            $table->longText('description')->nullable();
             $table->timestamps();
+            $table->foreign('category_id') -> references('id') ->on('categories') ->onDelete('cascade');
         });
     }
 
@@ -27,5 +33,6 @@ class CreateProductsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('products');
+
     }
 }
